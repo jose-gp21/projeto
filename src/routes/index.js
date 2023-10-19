@@ -1,21 +1,19 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MaterialCommunityIcons, Entypo, Ionicons, SimpleLineIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import LinearGradient from 'react-native-linear-gradient';
 
 import Feed from '../pages/Feed';
 import Search from '../pages/Search';
 import Create from '../pages/Create';
 import MyPurchases from '../pages/MyPurchases';
 import Profile from '../pages/Profile';
-import ButtonCreateFocused from '../components/ButtonCreateFocused';
-import ButtonCreateNotFocused from '../components/ButtonCreateNotFocused'
 
 const Tab = createBottomTabNavigator();
 
 const Routes = () => {
-
   return (
     <Tab.Navigator
       screenOptions={{
@@ -27,7 +25,7 @@ const Routes = () => {
         },
         tabBarBackground: () => (
           <LinearGradient
-            colors={['#FF5757','#8C52FF']} // substitua pelas cores que desejar
+            colors={['#FF5757', '#8C52FF']} // substitua pelas cores que desejar
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={{
@@ -52,118 +50,73 @@ const Routes = () => {
           </LinearGradient>
         ),
         tabBarShowLabel: false,
-        tabBarLabelPosition: 'below-icon',
         headerShown: false,
-        tabBarInactiveTintColor:'grey',
+        tabBarInactiveTintColor: 'grey',
         tabBarActiveTintColor: '#fff',
       }}
     >
       <Tab.Screen
-        name='Início'
+        name="Início"
         component={Feed}
         options={{
-          tabBarIcon: ({ color, size, focused }) => {
-            if (focused) {
-              return (
-                <>
-                  <Ionicons name="home" size={22} color={color} />
-                  <Text style={{ color: color, fontSize: 12 }}>Início</Text>
-                </>
-              );
-            }
-            return (
-              <>
-                <Ionicons name="home-outline" size={22} color={color} />
-                <Text style={{ color: color, fontSize: 12 }}>Início</Text>
-              </>
-            );
-          },
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? 'home' : 'home-outline'}
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
-      
       <Tab.Screen
-        name='Descubra'
+        name="Descubra"
         component={Search}
         options={{
-          tabBarIcon: ({ color, size, focused }) => {
-            if (focused) {
-              return (
-                <>
-                  <Ionicons name="search-sharp" size={22} color={color} />
-                  <Text style={{ color: color, fontSize: 12 }}>Descubra</Text>
-                </>
-              );
-            }
-            return (
-              <>
-                <Ionicons name="search-sharp" size={22} color={color} />
-                <Text style={{ color: color, fontSize: 12 }}>Descubra</Text>
-              </>
-            );
-          },
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name="search-sharp"
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
-
       <Tab.Screen
-        name='Criar'
+        name="Criar"
         component={Create}
         options={{
-          tabBarIcon: ({ size, focused }) => {
-            if (focused) {
-              return (
-                <ButtonCreateFocused size={60}/>
-              );
-            }
-            return (
-              <ButtonCreateNotFocused size={size}/>
-            );
-          },
+          tabBarIcon: ({ size, focused }) =>
+            focused ? (
+              <ButtonCreateFocused size={60} />
+            ) : (
+              <ButtonCreateNotFocused size={size} />
+            ),
         }}
       />
-
       <Tab.Screen
-        name='Compras'
+        name="Compras"
         component={MyPurchases}
         options={{
-          tabBarIcon: ({ color, size, focused }) => {
-            if (focused) {
-              return (
-                <>
-                  <SimpleLineIcons name="handbag" size={22} color={color} />
-                  <Text style={{ color: color, fontSize: 11 }}>Compras</Text>
-                </>
-              );
-            }
-            return (
-              <>
-                <SimpleLineIcons name="handbag" size={22} color={color} />
-                <Text style={{ color: color, fontSize: 11 }}>Compras</Text>
-              </>
-            );
-          },
+          tabBarIcon: ({ color, size, focused }) => (
+            <SimpleLineIcons
+              name="handbag"
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
-
       <Tab.Screen
-        name='Eu'
+        name="Eu"
         component={Profile}
         options={{
-          tabBarIcon: ({ color, size, focused }) => {
-            if (focused) {
-              return (
-                <>
-                  <Ionicons name="person" size={22} color={color} />
-                  <Text style={{ color: color, fontSize: 12 }}>Eu</Text>
-                </>
-              );
-            }
-            return (
-              <>
-                <Ionicons name="person-outline" size={22} color={color} />
-                <Text style={{ color: color, fontSize: 12 }}>Eu</Text>
-              </>
-            );
-          },
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? 'person' : 'person-outline'}
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
     </Tab.Navigator>

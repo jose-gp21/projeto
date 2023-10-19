@@ -3,11 +3,13 @@ import { useRef, useState, useEffect } from 'react';
 import { Video } from 'expo-av';
 import { MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import ButtonBag from '../ButtonBag';
+import ButtonProduct from '../ButtonProduct';
+import ModalProductInfo from '../ModaProductInfo';
 
 const { height: heightScreen, width: widthScreen } = Dimensions.get("screen");  
 
-export default function FeedItem({data, currentVisibleItem}) {
-    
+export default function FeedItem({data, currentVisibleItem, feedItems}) {
+
   const video = useRef(null);
   const [status, setStatus] = useState({});
   const [isMuted, setIsMuted] = useState(true);
@@ -30,11 +32,14 @@ export default function FeedItem({data, currentVisibleItem}) {
   }
 
   return (
-    <Pressable onPress={handlePlayer} style={{position: 'relative'}}>
-      <View style={[styles.info, { bottom: 110 }]}>
+    <Pressable onPress={handlePlayer} style={{position: 'relative', zIndex: 10}}>
+      <View style={styles.info}>
         <Text style={styles.name}>{data?.name}</Text>
         <Text style={styles.description} numberOfLines={1}>{data?.description}</Text>
       </View>
+      <TouchableOpacity style={styles.buttonProduct} onPress={()=><ModalProductInfo/>}>
+        <ButtonProduct productData={data} allProducts={feedItems} productIndex={data.id - 1} />
+      </TouchableOpacity>
 
       <View style={styles.actions}>
 
@@ -98,6 +103,7 @@ const styles = StyleSheet.create({
     zIndex: 90,
     left: 8,
     padding: 8,
+    bottom: 100
   },
   name: {
     color: "#FFF",
@@ -109,7 +115,7 @@ const styles = StyleSheet.create({
   }, 
   description: {
     color: "#FFF",
-    marginRight: 14,
+    marginRight: 40,
     textShadowColor: 'rgba(0,0,0, 0.28)',
     textShadowOffset: { width: -1, height: 1.5 },
     textShadowRadius: 8,
@@ -117,9 +123,15 @@ const styles = StyleSheet.create({
   actions:{
     position: 'absolute',
     right: 8,
-    zIndex: 99,
-    bottom: Platform.OS === 'android' ? 120 : 170,
+    zIndex: 90,
+    bottom: Platform.OS === 'android' ? 130 : 180,
     gap: 8
+  },
+  buttonProduct:{
+    position: 'absolute',
+    left: 8,
+    zIndex: 99,
+    bottom: Platform.OS === 'android' ? 160 : 210,
   },
   actionText:{
     textAlign: 'center',
